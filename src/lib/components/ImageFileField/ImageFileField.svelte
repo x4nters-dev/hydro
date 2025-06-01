@@ -1,6 +1,6 @@
 <script lang="ts">
-import { FileUpload } from "@skeletonlabs/skeleton-svelte";
 import { t } from "$lib/i18n";
+import { FileUpload } from "@skeletonlabs/skeleton-svelte";
 </script>
 
 <label for="image" class="label">

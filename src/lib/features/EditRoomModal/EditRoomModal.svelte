@@ -1,12 +1,12 @@
 <script lang="ts">
-import type { RoomInterface } from "$lib/interfaces/room.interface";
-import CustomModal from "$lib/components/CustomModal/CustomModal.svelte";
-import { Edit } from "lucide-svelte";
-import Form from "$lib/components/Form/Form.svelte";
-import TextInput from "$lib/components/TextInput/TextInput.svelte";
-import ImageFileField from "$lib/components/ImageFileField/ImageFileField.svelte";
 import CancelSubmit from "$lib/components/CancelSubmit/CancelSubmit.svelte";
+import CustomModal from "$lib/components/CustomModal/CustomModal.svelte";
+import Form from "$lib/components/Form/Form.svelte";
+import ImageFileField from "$lib/components/ImageFileField/ImageFileField.svelte";
+import TextInput from "$lib/components/TextInput/TextInput.svelte";
 import { t } from "$lib/i18n";
+import type { RoomInterface } from "$lib/interfaces/room.interface";
+import { Edit } from "lucide-svelte";
 
 const props: {
 	room: RoomInterface;

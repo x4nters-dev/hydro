@@ -1,8 +1,8 @@
 <script lang="ts">
-import { Modal } from "@skeletonlabs/skeleton-svelte";
-import type { Snippet } from "svelte";
 import IconButton from "$lib/components/IconButton/IconButton.svelte";
+import { Modal } from "@skeletonlabs/skeleton-svelte";
 import { X } from "lucide-svelte";
+import type { Snippet } from "svelte";
 
 const props: {
 	title: string;

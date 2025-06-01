@@ -4,8 +4,13 @@ import DetailsGrid from "$lib/components/DetailsGrid/DetailsGrid.svelte";
 import ImageCover from "$lib/components/ImageCover/ImageCover.svelte";
 import Subtitle from "$lib/components/Subtitle/Subtitle.svelte";
 import { DEFAULT_FLOWER_IMAGE } from "$lib/consts/defaultFlowerImage.const";
+import ClearHistoryForFlowerModal from "$lib/features/ClearHistoryForFlowerModal/ClearHistoryForFlowerModal.svelte";
+import DeleteFlower from "$lib/features/DeleteFlower/DeleteFlower.svelte";
+import EditFlowerModal from "$lib/features/EditFlowerModal/EditFlowerModal.svelte";
 import WateringHistoryTable from "$lib/features/WateringHistoryTable/WateringHistoryTable.svelte";
+import { t } from "$lib/i18n";
 import type { FlowerInterface } from "$lib/interfaces/flower.interface";
+import type { RoomInterface } from "$lib/interfaces/room.interface";
 import { toDateFormat } from "$lib/utils/toDateFormat.util";
 import {
 	CalendarCheck,
@@ -17,11 +22,6 @@ import {
 	ThermometerSnowflake,
 	ThermometerSun,
 } from "lucide-svelte";
-import DeleteFlower from "$lib/features/DeleteFlower/DeleteFlower.svelte";
-import EditFlowerModal from "$lib/features/EditFlowerModal/EditFlowerModal.svelte";
-import type { RoomInterface } from "$lib/interfaces/room.interface";
-import { t } from "$lib/i18n";
-import ClearHistoryForFlowerModal from "$lib/features/ClearHistoryForFlowerModal/ClearHistoryForFlowerModal.svelte";
 
 const props: {
 	flower: FlowerInterface;

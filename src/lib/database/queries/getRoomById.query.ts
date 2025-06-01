@@ -1,8 +1,8 @@
 import { DB } from "$lib/database/connection";
-import { rooms } from "$lib/database/schema";
-import { eq } from "drizzle-orm";
-import { bufferToDataUrl } from "$lib/utils/bufferToDataUrl.util";
 import { getFlowersByRoomId } from "$lib/database/queries/getFlowersByRoomId.query";
+import { rooms } from "$lib/database/schema";
+import { bufferToDataUrl } from "$lib/utils/bufferToDataUrl.util";
+import { eq } from "drizzle-orm";
 
 export async function getRoomByIdQuery(params: {
 	roomId: number;
@@ -22,13 +22,15 @@ export async function getRoomByIdQuery(params: {
 	return {
 		...room,
 		image:
-			room?.image?.byteLength! > 0
+			room?.image && room?.image?.byteLength > 0
 				? bufferToDataUrl(room?.image as Buffer)
 				: null,
 		flowers: flowers.map((f) => ({
 			...f,
 			image:
-				f.image?.byteLength! > 0 ? bufferToDataUrl(f?.image as Buffer) : null,
+				f.image && f.image.byteLength > 0
+					? bufferToDataUrl(f?.image as Buffer)
+					: null,
 		})),
 	};
 }

@@ -5,6 +5,7 @@ import IconButton from "$lib/components/IconButton/IconButton.svelte";
 import ImageCover from "$lib/components/ImageCover/ImageCover.svelte";
 import InteractiveTile from "$lib/components/InteractiveTile/InteractiveTile.svelte";
 import { DEFAULT_FLOWER_IMAGE } from "$lib/consts/defaultFlowerImage.const";
+import { t } from "$lib/i18n";
 import type { DailyTaskInterface } from "$lib/interfaces/dailyTask.interface";
 import { toDateFormat } from "$lib/utils/toDateFormat.util";
 import {
@@ -17,7 +18,6 @@ import {
 	ThermometerSnowflake,
 	ThermometerSun,
 } from "lucide-svelte";
-import { t } from "$lib/i18n";
 
 const props: {
 	task: DailyTaskInterface;

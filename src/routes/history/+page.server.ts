@@ -1,7 +1,7 @@
-import { getWateringHistoryQuery } from "$lib/database/queries/getWateringHistory.query";
-import { addMonths } from "date-fns";
-import type { Actions } from "@sveltejs/kit";
 import { deleteWateringHistoryMutation } from "$lib/database/mutations/deleteWateringHistory.mutation";
+import { getWateringHistoryQuery } from "$lib/database/queries/getWateringHistory.query";
+import type { Actions } from "@sveltejs/kit";
+import { addMonths } from "date-fns";
 
 export async function load() {
 	const wateringHistory = await getWateringHistoryQuery({

@@ -2,9 +2,9 @@
 import ImageCover from "$lib/components/ImageCover/ImageCover.svelte";
 import InteractiveTile from "$lib/components/InteractiveTile/InteractiveTile.svelte";
 import { DEFAULT_FLOWER_IMAGE } from "$lib/consts/defaultFlowerImage.const";
-import type { FlowerInterface } from "$lib/interfaces/flower.interface";
 import DeleteFlower from "$lib/features/DeleteFlower/DeleteFlower.svelte";
 import EditFlowerModal from "$lib/features/EditFlowerModal/EditFlowerModal.svelte";
+import type { FlowerInterface } from "$lib/interfaces/flower.interface";
 import type { RoomInterface } from "$lib/interfaces/room.interface";
 
 const props: {

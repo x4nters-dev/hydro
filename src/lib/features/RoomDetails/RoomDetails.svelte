@@ -1,12 +1,12 @@
 <script lang="ts">
 import ImageCover from "$lib/components/ImageCover/ImageCover.svelte";
+import Subtitle from "$lib/components/Subtitle/Subtitle.svelte";
 import { DEFAULT_ROOM_IMAGE } from "$lib/consts/defaultRoomImage.const";
-import type { RoomInterface } from "$lib/interfaces/room.interface";
 import DeleteRoomModal from "$lib/features/DeleteRoomModal/DeleteRoomModal.svelte";
 import EditRoomModal from "$lib/features/EditRoomModal/EditRoomModal.svelte";
 import FlowersTiles from "$lib/features/FlowersTiles/FlowersTiles.svelte";
-import Subtitle from "$lib/components/Subtitle/Subtitle.svelte";
 import { t } from "$lib/i18n";
+import type { RoomInterface } from "$lib/interfaces/room.interface";
 
 const props: {
 	room: RoomInterface;

@@ -1,7 +1,7 @@
 import type { DailyTaskInterface } from "$lib/interfaces/dailyTask.interface";
 import type { FlowerInterface } from "$lib/interfaces/flower.interface";
-import { differenceInDays } from "date-fns";
 import { bufferToDataUrl } from "$lib/utils/bufferToDataUrl.util";
+import { differenceInDays } from "date-fns";
 
 export function getDailyTasks(
 	flowers: FlowerInterface[],

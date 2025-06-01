@@ -1,7 +1,7 @@
 import { DB } from "$lib/database/connection";
 import { flowers } from "$lib/database/schema";
-import { eq } from "drizzle-orm";
 import type { ResultSet } from "@libsql/client";
+import { eq } from "drizzle-orm";
 
 export interface DeleteFlowerMutationInterface {
 	flowerId: number;

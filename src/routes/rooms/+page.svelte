@@ -5,8 +5,8 @@ import PageHeader from "$lib/components/PageHeader/PageHeader.svelte";
 import PageLayout from "$lib/components/PageLayout/PageLayout.svelte";
 import AddRoomModal from "$lib/features/AddRoomModal/AddRoomModal.svelte";
 import RoomsTiles from "$lib/features/RoomsTiles/RoomsTiles.svelte";
-import type { RoomInterface } from "$lib/interfaces/room.interface";
 import { t } from "$lib/i18n";
+import type { RoomInterface } from "$lib/interfaces/room.interface";
 
 let rooms = $derived(page.data.rooms);
 

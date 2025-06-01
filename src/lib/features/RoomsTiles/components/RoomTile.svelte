@@ -2,9 +2,9 @@
 import ImageCover from "$lib/components/ImageCover/ImageCover.svelte";
 import InteractiveTile from "$lib/components/InteractiveTile/InteractiveTile.svelte";
 import { DEFAULT_ROOM_IMAGE } from "$lib/consts/defaultRoomImage.const";
-import type { RoomInterface } from "$lib/interfaces/room.interface";
 import DeleteRoomModal from "$lib/features/DeleteRoomModal/DeleteRoomModal.svelte";
 import EditRoomModal from "$lib/features/EditRoomModal/EditRoomModal.svelte";
+import type { RoomInterface } from "$lib/interfaces/room.interface";
 
 const props: {
 	room: RoomInterface;

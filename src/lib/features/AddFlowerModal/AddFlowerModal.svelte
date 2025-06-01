@@ -1,15 +1,15 @@
 <script lang="ts">
-import CustomModal from "$lib/components/CustomModal/CustomModal.svelte";
-import { Plus } from "lucide-svelte";
-import TextInput from "$lib/components/TextInput/TextInput.svelte";
-import type { RoomInterface } from "$lib/interfaces/room.interface";
-import Select from "$lib/components/Select/Select.svelte";
-import NumberInput from "$lib/components/NumberInput/NumberInput.svelte";
-import { SoilTypeEnum } from "$lib/enums/soilType.enum";
 import CancelSubmit from "$lib/components/CancelSubmit/CancelSubmit.svelte";
+import CustomModal from "$lib/components/CustomModal/CustomModal.svelte";
 import Form from "$lib/components/Form/Form.svelte";
 import ImageFileField from "$lib/components/ImageFileField/ImageFileField.svelte";
+import NumberInput from "$lib/components/NumberInput/NumberInput.svelte";
+import Select from "$lib/components/Select/Select.svelte";
+import TextInput from "$lib/components/TextInput/TextInput.svelte";
+import { SoilTypeEnum } from "$lib/enums/soilType.enum";
 import { t } from "$lib/i18n";
+import type { RoomInterface } from "$lib/interfaces/room.interface";
+import { Plus } from "lucide-svelte";
 
 const props: {
 	rooms: RoomInterface[];

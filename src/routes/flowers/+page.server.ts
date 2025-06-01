@@ -1,14 +1,14 @@
-import { getFlowersQuery } from "$lib/database/queries/getFlowers.query";
-import type { FlowerInterface } from "$lib/interfaces/flower.interface";
-import { parseFormData } from "$lib/utils/parseFormData.util";
 import { createFlowerMutation } from "$lib/database/mutations/createFlower.mutation";
-import { bufferToDataUrl } from "$lib/utils/bufferToDataUrl.util";
 import { deleteFlowerMutation } from "$lib/database/mutations/deleteFlower.mutation";
-import { getRoomsQuery } from "$lib/database/queries/getRooms.query";
 import {
-	updateFlowerMutation,
 	type UpdateFlowerMutationInterface,
+	updateFlowerMutation,
 } from "$lib/database/mutations/updateFlower.mutation";
+import { getFlowersQuery } from "$lib/database/queries/getFlowers.query";
+import { getRoomsQuery } from "$lib/database/queries/getRooms.query";
+import type { FlowerInterface } from "$lib/interfaces/flower.interface";
+import { bufferToDataUrl } from "$lib/utils/bufferToDataUrl.util";
+import { parseFormData } from "$lib/utils/parseFormData.util";
 
 export async function load() {
 	const flowers = (await getFlowersQuery()).map((f) => ({

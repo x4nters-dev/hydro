@@ -1,11 +1,11 @@
-import { getRoomByIdQuery } from "$lib/database/queries/getRoomById.query";
-import { type Actions, fail, redirect } from "@sveltejs/kit";
-import { parseFormData } from "$lib/utils/parseFormData.util";
 import { deleteRoomMutation } from "$lib/database/mutations/deleteRoom.mutation";
 import {
-	updateRoomMutation,
 	type UpdateRoomMutationInterface,
+	updateRoomMutation,
 } from "$lib/database/mutations/updateRoom.mutation";
+import { getRoomByIdQuery } from "$lib/database/queries/getRoomById.query";
+import { parseFormData } from "$lib/utils/parseFormData.util";
+import { type Actions, fail, redirect } from "@sveltejs/kit";
 
 export async function load({ params }) {
 	const roomId = Number(params.roomId);

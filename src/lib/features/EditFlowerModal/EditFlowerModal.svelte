@@ -1,16 +1,16 @@
 <script lang="ts">
-import type { FlowerInterface } from "$lib/interfaces/flower.interface";
-import CustomModal from "$lib/components/CustomModal/CustomModal.svelte";
-import { Edit } from "lucide-svelte";
-import Form from "$lib/components/Form/Form.svelte";
-import TextInput from "$lib/components/TextInput/TextInput.svelte";
-import Select from "$lib/components/Select/Select.svelte";
-import type { RoomInterface } from "$lib/interfaces/room.interface";
-import { SoilTypeEnum } from "$lib/enums/soilType.enum";
 import CancelSubmit from "$lib/components/CancelSubmit/CancelSubmit.svelte";
-import NumberInput from "$lib/components/NumberInput/NumberInput.svelte";
+import CustomModal from "$lib/components/CustomModal/CustomModal.svelte";
+import Form from "$lib/components/Form/Form.svelte";
 import ImageFileField from "$lib/components/ImageFileField/ImageFileField.svelte";
+import NumberInput from "$lib/components/NumberInput/NumberInput.svelte";
+import Select from "$lib/components/Select/Select.svelte";
+import TextInput from "$lib/components/TextInput/TextInput.svelte";
+import { SoilTypeEnum } from "$lib/enums/soilType.enum";
 import { t } from "$lib/i18n";
+import type { FlowerInterface } from "$lib/interfaces/flower.interface";
+import type { RoomInterface } from "$lib/interfaces/room.interface";
+import { Edit } from "lucide-svelte";
 
 const props: {
 	flower: FlowerInterface;

@@ -1,9 +1,9 @@
 <script lang="ts">
-import CustomModal from "$lib/components/CustomModal/CustomModal.svelte";
-import { Eraser } from "lucide-svelte";
-import Form from "$lib/components/Form/Form.svelte";
 import CancelSubmit from "$lib/components/CancelSubmit/CancelSubmit.svelte";
+import CustomModal from "$lib/components/CustomModal/CustomModal.svelte";
+import Form from "$lib/components/Form/Form.svelte";
 import { t } from "$lib/i18n";
+import { Eraser } from "lucide-svelte";
 </script>
 
 <CustomModal title={$t('clearHistory')}>

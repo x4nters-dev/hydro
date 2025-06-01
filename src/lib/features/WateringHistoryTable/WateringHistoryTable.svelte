@@ -1,7 +1,7 @@
 <script lang="ts">
+import { t } from "$lib/i18n";
 import type { WateringHistoryInterface } from "$lib/interfaces/wateringHistory.interface";
 import { toDateFormat } from "$lib/utils/toDateFormat.util";
-import { t } from "$lib/i18n";
 
 const props: {
 	wateringHistory: WateringHistoryInterface[] | null | undefined;
