@@ -1,0 +1,16 @@
+export enum SoilTypeEnum {
+	GARDEN_SOIL = "gardenSoil",
+	UNIVERSAL_POTTING_SOIL = "universalPottingSoil",
+	PEAT = "peat",
+	PERLITE = "perlite",
+	VERMICULITE = "vermiculite",
+	COMPOST = "compost",
+	SAND = "sand",
+	CLAY_SOIL = "claySoil",
+	SANDY_SOIL = "sandySoil",
+	LEAF_MOLD = "leafMold",
+	COCONUT_COIR = "coconutCoir",
+	SOIL_AND_SAND_MIX = "soilAndSandMix",
+	CACTUS_SOIL_MIX = "cactusSoilMix",
+	VEGETABLE_SOIL_MIX = "vegetableSoilMix",
+}

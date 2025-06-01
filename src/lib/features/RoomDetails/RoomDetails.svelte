@@ -1,0 +1,31 @@
+<script lang="ts">
+import ImageCover from "$lib/components/ImageCover/ImageCover.svelte";
+import { DEFAULT_ROOM_IMAGE } from "$lib/consts/defaultRoomImage.const";
+import type { RoomInterface } from "$lib/interfaces/room.interface";
+import DeleteRoomModal from "$lib/features/DeleteRoomModal/DeleteRoomModal.svelte";
+import EditRoomModal from "$lib/features/EditRoomModal/EditRoomModal.svelte";
+import FlowersTiles from "$lib/features/FlowersTiles/FlowersTiles.svelte";
+import Subtitle from "$lib/components/Subtitle/Subtitle.svelte";
+import { t } from "$lib/i18n";
+
+const props: {
+	room: RoomInterface;
+} = $props();
+</script>
+
+<ImageCover
+    title={props.room.name ?? props.room.id}
+    imageSrc={props.room.image ? String(props.room.image) : DEFAULT_ROOM_IMAGE}
+    alt={String(props.room.name ?? props.room.id)}
+    compact
+>
+    {#snippet actions()}
+        <EditRoomModal room={props.room} />
+        <DeleteRoomModal room={props.room} />
+    {/snippet}
+</ImageCover>
+
+<div class="p-4">
+    <Subtitle text={$t('plants')} />
+    <FlowersTiles flowers={props.room.flowers} rooms={[]} onClick={() => {}}/>
+</div>
