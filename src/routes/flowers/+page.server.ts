@@ -9,6 +9,7 @@ import { getRoomsQuery } from "$lib/database/queries/getRooms.query";
 import type { FlowerInterface } from "$lib/interfaces/flower.interface";
 import { bufferToDataUrl } from "$lib/utils/bufferToDataUrl.util";
 import { parseFormData } from "$lib/utils/parseFormData.util";
+import { redirect } from "@sveltejs/kit";
 
 export async function load() {
 	const flowers = (await getFlowersQuery()).map((f) => ({
@@ -26,9 +27,9 @@ export const actions = {
 		const payload = (await parseFormData(
 			await request.formData(),
 		)) as FlowerInterface;
-		const id = await createFlowerMutation(payload);
+		await createFlowerMutation(payload);
 
-		return { id };
+		return redirect(302, "/flowers");
 	},
 	editFlower: async ({ request }) => {
 		const payload = (await parseFormData(
@@ -36,15 +37,15 @@ export const actions = {
 		)) as UpdateFlowerMutationInterface;
 		await updateFlowerMutation(payload);
 
-		return { success: true };
+		return redirect(302, "/flowers");
 	},
 	deleteFlower: async ({ request }) => {
 		const payload = (await parseFormData(await request.formData())) as {
 			flowerId: string;
 		};
 		const flowerId = Number(payload.flowerId);
-		const result = await deleteFlowerMutation({ flowerId });
+		await deleteFlowerMutation({ flowerId });
 
-		return { success: result.rowsAffected > 0 };
+		return redirect(302, "/flowers");
 	},
 };

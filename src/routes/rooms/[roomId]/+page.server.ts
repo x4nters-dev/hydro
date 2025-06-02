@@ -28,7 +28,7 @@ export const actions: Actions = {
 		)) as UpdateRoomMutationInterface;
 		await updateRoomMutation(payload);
 
-		return { success: true };
+		return redirect(302, `/rooms/${payload.roomId}`);
 	},
 	deleteRoom: async ({ request }) => {
 		const payload = (await parseFormData(await request.formData())) as {

@@ -1,6 +1,6 @@
 import { deleteWateringHistoryMutation } from "$lib/database/mutations/deleteWateringHistory.mutation";
 import { getWateringHistoryQuery } from "$lib/database/queries/getWateringHistory.query";
-import type { Actions } from "@sveltejs/kit";
+import { type Actions, redirect } from "@sveltejs/kit";
 import { addMonths } from "date-fns";
 
 export async function load() {
@@ -14,8 +14,8 @@ export async function load() {
 
 export const actions: Actions = {
 	clearHistory: async () => {
-		const result = await deleteWateringHistoryMutation();
+		await deleteWateringHistoryMutation();
 
-		return { success: result.rowsAffected > 0 };
+		return redirect(302, "/history");
 	},
 };

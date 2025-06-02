@@ -40,24 +40,24 @@ export const actions = {
 		)) as UpdateFlowerMutationInterface;
 		await updateFlowerMutation(payload);
 
-		return { success: true };
+		return redirect(302, `/flowers/${payload.flowerId}`);
 	},
 	deleteFlower: async ({ request }) => {
 		const payload = (await parseFormData(await request.formData())) as {
 			flowerId: string;
 		};
 		const flowerId = Number(payload.flowerId);
-		const result = await deleteFlowerMutation({ flowerId });
+		await deleteFlowerMutation({ flowerId });
 
-		return { success: result.rowsAffected > 0 };
+		return redirect(302, "/flowers");
 	},
 	clearHistory: async ({ request }) => {
 		const payload = (await parseFormData(
 			await request.formData(),
 		)) as DeleteWateringHistoryByFlowerIdMutationInterface;
 		const flowerId = Number(payload.flowerId);
-		const result = await deleteWateringHistoryByFlowerIdMutation({ flowerId });
+		await deleteWateringHistoryByFlowerIdMutation({ flowerId });
 
-		return { success: result.rowsAffected > 0 };
+		return redirect(302, `/flowers/${payload.flowerId}`);
 	},
 };

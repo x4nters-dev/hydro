@@ -11,7 +11,7 @@ import { getRoomsQuery } from "$lib/database/queries/getRooms.query";
 import type { RoomInterface } from "$lib/interfaces/room.interface";
 import { bufferToDataUrl } from "$lib/utils/bufferToDataUrl.util";
 import { parseFormData } from "$lib/utils/parseFormData.util";
-import type { Actions } from "@sveltejs/kit";
+import { type Actions, redirect } from "@sveltejs/kit";
 
 export async function load() {
 	const rooms = ((await getRoomsQuery()) as RoomInterface[]).map((r) => ({
@@ -30,9 +30,9 @@ export const actions: Actions = {
 		const payload = (await parseFormData(
 			await request.formData(),
 		)) as CreateRoomMutationInterface;
-		const result = await createRoomMutation(payload);
+		await createRoomMutation(payload);
 
-		return { success: result.rowsAffected > 0 };
+		return redirect(302, "/rooms");
 	},
 	editRoom: async ({ request }) => {
 		const payload = (await parseFormData(
@@ -40,15 +40,15 @@ export const actions: Actions = {
 		)) as UpdateRoomMutationInterface;
 		await updateRoomMutation(payload);
 
-		return { success: true };
+		return redirect(302, "/rooms");
 	},
 	deleteRoom: async ({ request }) => {
 		const payload = (await parseFormData(await request.formData())) as {
 			roomId: string;
 		};
 		const roomId = Number(payload.roomId);
-		const result = await deleteRoomMutation({ roomId });
+		await deleteRoomMutation({ roomId });
 
-		return { success: result.rowsAffected > 0 };
+		return redirect(302, "/rooms");
 	},
 };

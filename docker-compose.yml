@@ -1,0 +1,14 @@
+name: hydro
+
+services:
+  server:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./hydro.db:/app/hydro.db
+    env_file:
+      - .env.production
+    restart: unless-stopped
