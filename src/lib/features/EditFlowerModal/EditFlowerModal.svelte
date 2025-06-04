@@ -33,7 +33,7 @@ const props: {
                 value={props.flower.name}
             />
 
-            <Select label={$t('room')} name="roomId" value={props.flower.roomId}>
+            <Select label={$t('room')} name="roomId" value={props.flower.roomId} allowEmpty>
                 {#each props.rooms as room}
                     <option value={room.id}>{room.name}</option>
                 {/each}

@@ -103,7 +103,7 @@ export const actions = {
 		const payload =
 			await parseFormData<CreateFlowerPhotoMutationInterface>(formData);
 
-		const image = formData.get("image") as File;
+		const image = formData.get("file") as File;
 		const filename = image.name;
 		await createFlowerPhotoMutation({ ...payload, filename });
 

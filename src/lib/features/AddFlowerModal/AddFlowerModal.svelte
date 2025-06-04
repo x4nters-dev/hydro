@@ -30,7 +30,7 @@ const props: {
 
             <ImageFileField name="image" />
 
-            <Select label={$t('room')} name="roomId">
+            <Select label={$t('room')} name="roomId" allowEmpty>
                 {#each props.rooms as room}
                     <option value={room.id}>{room.name}</option>
                 {/each}

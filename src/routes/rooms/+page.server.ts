@@ -28,7 +28,7 @@ export async function load(): Promise<PageDataInterface> {
 			flowers: r.flowers.map((f) => ({
 				id: f.id,
 				name: f.name,
-				image: f.photos[0].file ?? "",
+				image: f.photos[0]?.file ?? "",
 				roomId: r.id,
 				roomName: r.name,
 				watering: {

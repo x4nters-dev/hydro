@@ -21,36 +21,41 @@ export interface CreateFlowerMutationInterface {
 }
 
 export function createFlowerMutation(params: CreateFlowerMutationInterface) {
-	return DB.transaction(async (tx) => {
-		const [result] = await tx
+	DB.transaction((tx) => {
+		const { flowerId } = tx
 			.insert(flowers)
 			.values({
 				name: params.name,
 			})
-			.returning({ id: flowers.id });
+			.returning({ flowerId: flowers.id })
+			.get();
 
 		if (params.image) {
-			await tx.insert(photos).values({
-				flowerId: result.id,
-				date: new Date(),
-				file: params.image,
-				filename: params.filename as string,
-			});
+			tx.insert(photos)
+				.values({
+					flowerId,
+					date: new Date(),
+					file: params.image,
+					filename: params.filename as string,
+				})
+				.run();
 		}
 
-		await tx.insert(watering).values({
-			flowerId: result.id,
-			amount: params.watering.amount,
-			frequency: params.watering.frequency,
-		});
+		tx.insert(watering)
+			.values({
+				flowerId,
+				amount: params.watering.amount,
+				frequency: params.watering.frequency ?? 1,
+			})
+			.run();
 
-		await tx.insert(conditions).values({
-			flowerId: result.id,
-			soilType: params.conditions.soilType,
-			maxTemperature: params.conditions.maxTemperature,
-			minTemperature: params.conditions.minTemperature,
-		});
-
-		return result.id;
+		tx.insert(conditions)
+			.values({
+				flowerId,
+				soilType: params.conditions.soilType,
+				maxTemperature: params.conditions.maxTemperature,
+				minTemperature: params.conditions.minTemperature,
+			})
+			.run();
 	});
 }

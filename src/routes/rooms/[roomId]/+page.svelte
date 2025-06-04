@@ -6,11 +6,12 @@ import RoomDetails from "$lib/features/RoomDetails/RoomDetails.svelte";
 import { t } from "$lib/i18n";
 
 let room = $derived(page.data.room);
+let flowers = $derived(page.data.flowers);
 </script>
 
 <PageLayout disablePadding>
     {#snippet header()}
         <PageHeader title={$t('rooms')} showBackButton />
     {/snippet}
-    <RoomDetails {room} />
+    <RoomDetails {room} {flowers} />
 </PageLayout>

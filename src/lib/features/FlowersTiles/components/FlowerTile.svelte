@@ -16,6 +16,7 @@ import {
 	Fingerprint,
 	GlassWater,
 	LandPlot,
+	SquareSquare,
 	ThermometerSnowflake,
 	ThermometerSun,
 } from "lucide-svelte";
@@ -85,6 +86,12 @@ function onclick(event: Event): void {
         <Detail value={props.flower.conditions.maxTemperature}>
             {#snippet icon()}
                 <ThermometerSun />
+            {/snippet}
+        </Detail>
+
+        <Detail value={props.flower.roomName}>
+            {#snippet icon()}
+                <SquareSquare />
             {/snippet}
         </Detail>
     </DetailsGrid>

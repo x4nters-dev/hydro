@@ -31,7 +31,8 @@ export const photos = sqliteTable("photos", {
 export const watering = sqliteTable("watering", {
 	flowerId: int()
 		.primaryKey()
-		.references(() => flowers.id, { onDelete: "cascade" }),
+		.references(() => flowers.id, { onDelete: "cascade" })
+		.notNull(),
 	frequency: int({ mode: "number" }),
 	amount: int({ mode: "number" }),
 });
@@ -39,7 +40,8 @@ export const watering = sqliteTable("watering", {
 export const conditions = sqliteTable("conditions", {
 	flowerId: int()
 		.primaryKey()
-		.references(() => flowers.id, { onDelete: "cascade" }),
+		.references(() => flowers.id, { onDelete: "cascade" })
+		.notNull(),
 	minTemperature: int({ mode: "number" }),
 	maxTemperature: int({ mode: "number" }),
 	soilType: text().$type<SoilTypeEnum>(),

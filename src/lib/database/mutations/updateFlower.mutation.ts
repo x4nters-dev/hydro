@@ -26,7 +26,7 @@ export async function updateFlowerMutation(
 ) {
 	const flowerUpdate: Record<string, unknown> = {
 		name: params.name,
-		roomId: params.roomId ?? null,
+		roomId: params.roomId || null,
 	};
 
 	await DB.update(flowers)

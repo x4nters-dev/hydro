@@ -1,23 +1,25 @@
 import { bufferToDataUrl } from "$lib/utils/bufferToDataUrl.util";
+import qs from "qs";
 
 export async function parseFormData<T extends Record<keyof T, unknown>>(
 	formData: FormData,
 ): Promise<T> {
-	const data: Record<keyof T, unknown> = {} as T;
+	const values = new URLSearchParams();
+	const files: Record<string, string | null> = {};
 
 	for (const [key, value] of formData.entries()) {
-		const keyOfT = key as keyof T;
 		if (value instanceof File) {
 			if (value.size > 0) {
 				const bytes = Buffer.from(await value.arrayBuffer());
-				data[keyOfT] = bufferToDataUrl(bytes ?? null);
+				files[key] = bufferToDataUrl(bytes);
 			} else {
-				data[keyOfT] = null;
+				files[key] = null;
 			}
-		} else {
-			data[keyOfT] = value;
-		}
+		} else values.append(key, value as string);
 	}
 
-	return data as T;
+	return {
+		...qs.parse(values.toString(), { interpretNumericEntities: true }),
+		...files,
+	} as T;
 }

@@ -23,7 +23,7 @@ function onclick(): void {
 
 	const link = document.createElement("a");
 	link.href = props.file;
-	link.download = props.file;
+	link.download = props.name;
 	link.click();
 }
 </script>

@@ -75,7 +75,7 @@ export const actions = {
 		const image = formData.get("image") as File | null;
 		const filename = image?.name ?? null;
 
-		await createFlowerMutation({
+		createFlowerMutation({
 			...payload,
 			filename,
 		});

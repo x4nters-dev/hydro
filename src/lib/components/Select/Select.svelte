@@ -9,7 +9,9 @@ let {
 	name: string;
 	value?: string | number | null;
 	children: Snippet;
+	allowEmpty?: boolean;
 	onchange?: (value: string | number) => void;
+	required?: boolean;
 } = $props();
 </script>
 
@@ -19,8 +21,12 @@ let {
         bind:value={value}
         class="select"
         name={props.name}
+        required={props.required}
         onchange={e => props.onchange?.(e.currentTarget.value)}
     >
+        {#if props.allowEmpty}
+            <option value={null}>-</option>
+        {/if}
         {@render props.children()}
     </select>
 </label>
