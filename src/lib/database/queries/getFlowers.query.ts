@@ -1,6 +1,6 @@
 import { DB } from "$lib/database/connection";
 import { photos, wateringHistory } from "$lib/database/schema";
-import { desc } from "drizzle-orm";
+import { asc, desc } from "drizzle-orm";
 
 export function getFlowersQuery() {
 	return DB.query.flowers.findMany({

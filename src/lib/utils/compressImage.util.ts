@@ -4,7 +4,7 @@ import sharp from "sharp";
 export async function compressImage(
 	image: File | null,
 ): Promise<Buffer | null> {
-	if (!image) return null;
+	if (!image || image.size === 0) return null;
 
 	const buffer = Buffer.from(await image.arrayBuffer());
 	const { width, height } = IMAGE_COMPRESSION;

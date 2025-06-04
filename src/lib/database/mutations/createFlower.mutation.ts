@@ -24,11 +24,15 @@ export interface CreateFlowerMutationInterface {
 
 export function createFlowerMutation(params: CreateFlowerMutationInterface) {
 	DB.transaction((tx) => {
+		const payload: Record<string, unknown> = {
+			name: params.name,
+		};
+
+		if (params.roomId) payload.roomId = params.roomId;
+
 		const { flowerId } = tx
 			.insert(flowers)
-			.values({
-				name: params.name,
-			})
+			.values(payload)
 			.returning({ flowerId: flowers.id })
 			.get();
 
