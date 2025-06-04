@@ -9,6 +9,8 @@ import {
 import { getFlowersWithoutRoom } from "$lib/database/queries/getFlowersWithoutRoom.query";
 import { getRoomByIdQuery } from "$lib/database/queries/getRoomById.query";
 import type { RoomInterface } from "$lib/interfaces/room.interface";
+import { bufferToDataUrl } from "$lib/utils/bufferToDataUrl.util";
+import { compressImage } from "$lib/utils/compressImage.util";
 import { parseFormData } from "$lib/utils/parseFormData.util";
 import { type Actions, fail, redirect } from "@sveltejs/kit";
 
@@ -40,7 +42,7 @@ export async function load({ params }): Promise<PageDataInterface> {
 				},
 				name: f.name,
 				roomName: room.name,
-				image: f.photos[0]?.file ?? DEFAULT_FLOWER_IMAGE,
+				image: f.photos[0]?.thumbnail ?? DEFAULT_FLOWER_IMAGE,
 				watering: {
 					flowerId: f.watering.flowerId,
 					amount: f.watering.amount,
@@ -50,7 +52,7 @@ export async function load({ params }): Promise<PageDataInterface> {
 				wateringHistory: [],
 			})),
 			name: room.name,
-			image: room.image ?? DEFAULT_ROOM_IMAGE,
+			image: room.thumbnail ?? DEFAULT_ROOM_IMAGE,
 			id: room.id,
 		},
 		flowers: flowers.map((f) => ({
@@ -74,7 +76,11 @@ export const actions: Actions = {
 	editRoom: async ({ request }) => {
 		const formData = await request.formData();
 		const payload = await parseFormData<UpdateRoomMutationInterface>(formData);
-		await updateRoomMutation(payload);
+
+		const image = formData.get("image") as File | null;
+		const thumbnail = bufferToDataUrl(await compressImage(image));
+
+		await updateRoomMutation({ ...payload, thumbnail });
 
 		return redirect(302, `/rooms/${payload.roomId}`);
 	},

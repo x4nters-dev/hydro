@@ -14,6 +14,14 @@ export function getRoomsQuery() {
 					photos: {
 						limit: 1,
 						orderBy: desc(photos.date),
+						columns: {
+							id: true,
+							date: true,
+							file: false,
+							thumbnail: true,
+							filename: false,
+							flowerId: false,
+						},
 					},
 					watering: true,
 					conditions: true,
@@ -24,7 +32,8 @@ export function getRoomsQuery() {
 		columns: {
 			id: true,
 			name: true,
-			image: true,
+			image: false,
+			thumbnail: true,
 		},
 	});
 }

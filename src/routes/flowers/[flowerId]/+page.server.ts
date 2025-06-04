@@ -18,6 +18,8 @@ import { getFlowerByIdQuery } from "$lib/database/queries/getFlowerById.query";
 import { getRoomsQuery } from "$lib/database/queries/getRooms.query";
 import type { FlowerInterface } from "$lib/interfaces/flower.interface";
 import type { RoomInterface } from "$lib/interfaces/room.interface";
+import { bufferToDataUrl } from "$lib/utils/bufferToDataUrl.util";
+import { compressImage } from "$lib/utils/compressImage.util";
 import { parseFormData } from "$lib/utils/parseFormData.util";
 import { redirect } from "@sveltejs/kit";
 
@@ -39,10 +41,9 @@ export async function load({ params }): Promise<PageDataInterface> {
 	return {
 		flower: {
 			photos: flower.photos.map((p) => ({
-				flowerId: p.flowerId,
+				flowerId: flower.id,
 				date: p.date,
-				file: p.file ?? DEFAULT_FLOWER_IMAGE,
-				filename: p.filename,
+				thumbnail: p.thumbnail ?? DEFAULT_FLOWER_IMAGE,
 
 				id: p.id,
 			})),
@@ -53,7 +54,7 @@ export async function load({ params }): Promise<PageDataInterface> {
 				amount: h.amount,
 				flowerName: flower.name,
 			})),
-			image: flower.photos?.[0]?.file ?? DEFAULT_FLOWER_IMAGE,
+			image: flower.photos?.[0]?.thumbnail ?? DEFAULT_FLOWER_IMAGE,
 			roomName: flower.room?.name ?? null,
 			roomId: flower.roomId,
 			name: flower.name || String(flower.id),
@@ -64,7 +65,7 @@ export async function load({ params }): Promise<PageDataInterface> {
 		rooms: rooms.map((r) => ({
 			id: r.id,
 			name: r.name,
-			image: r.image ?? DEFAULT_ROOM_IMAGE,
+			image: r.thumbnail ?? DEFAULT_ROOM_IMAGE,
 			flowers: [],
 		})),
 	};
@@ -105,7 +106,8 @@ export const actions = {
 
 		const image = formData.get("file") as File;
 		const filename = image.name;
-		await createFlowerPhotoMutation({ ...payload, filename });
+		const thumbnail = bufferToDataUrl(await compressImage(image)) as string;
+		await createFlowerPhotoMutation({ ...payload, filename, thumbnail });
 
 		return redirect(302, `/flowers/${payload.flowerId}`);
 	},

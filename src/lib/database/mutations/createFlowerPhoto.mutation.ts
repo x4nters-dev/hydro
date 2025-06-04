@@ -5,6 +5,7 @@ export interface CreateFlowerPhotoMutationInterface {
 	file: string;
 	flowerId: number;
 	filename: string;
+	thumbnail: string;
 }
 
 export function createFlowerPhotoMutation(
@@ -15,5 +16,6 @@ export function createFlowerPhotoMutation(
 		file: params.file,
 		filename: params.filename,
 		date: new Date(),
+		thumbnail: params.thumbnail,
 	});
 }

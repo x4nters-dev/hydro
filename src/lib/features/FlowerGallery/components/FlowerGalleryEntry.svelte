@@ -1,5 +1,5 @@
 <script lang="ts">
-import DownloadImageIconButton from "$lib/components/DownloadImageIconButton/DownloadImageIconButton.svelte";
+import DownloadPhotoButton from "$lib/components/DownloadPhotoButton/DownloadPhotoButton.svelte";
 import FullscreenImage from "$lib/components/FullscreenImage/FullscreenImage.svelte";
 import ImageCover from "$lib/components/ImageCover/ImageCover.svelte";
 import InteractiveTile from "$lib/components/InteractiveTile/InteractiveTile.svelte";
@@ -10,18 +10,20 @@ import { toDateFormat } from "$lib/utils/toDateFormat.util.js";
 const props: {
 	photo: PhotoInterface;
 } = $props();
+
+let url = $derived(`/photos?photoId=${props.photo.id}`);
 </script>
 
 <InteractiveTile>
     {#snippet header()}
         <ImageCover
-            imageSrc={props.photo.file}
+            imageSrc={props.photo.thumbnail}
             title={toDateFormat(props.photo.date)}
             alt={String(props.photo.id)}
         >
             {#snippet actions()}
-                <DownloadImageIconButton file={props.photo.file} name={props.photo.filename} />
-                <FullscreenImage file={props.photo.file} alt={String(props.photo.id)} />
+                <DownloadPhotoButton {url} />
+                <FullscreenImage src={url} alt={String(props.photo.id)} />
                 <DeleteFlowerPhoto photo={props.photo} />
             {/snippet}
         </ImageCover>

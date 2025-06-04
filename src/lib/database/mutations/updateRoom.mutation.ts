@@ -6,6 +6,7 @@ export interface UpdateRoomMutationInterface {
 	roomId: number;
 	name: string | null;
 	image: string | null;
+	thumbnail: string | null;
 }
 
 export function updateRoomMutation(params: UpdateRoomMutationInterface) {
@@ -15,6 +16,10 @@ export function updateRoomMutation(params: UpdateRoomMutationInterface) {
 
 	if (params.image && params.image.length > 0) {
 		roomUpdate.image = params.image;
+	}
+
+	if (params.thumbnail && params.thumbnail.length > 0) {
+		roomUpdate.thumbnail = params.thumbnail;
 	}
 
 	return DB.update(rooms).set(roomUpdate).where(eq(rooms.id, params.roomId));

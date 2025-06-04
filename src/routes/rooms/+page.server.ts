@@ -10,6 +10,8 @@ import {
 } from "$lib/database/mutations/updateRoom.mutation";
 import { getRoomsQuery } from "$lib/database/queries/getRooms.query";
 import type { RoomInterface } from "$lib/interfaces/room.interface";
+import { bufferToDataUrl } from "$lib/utils/bufferToDataUrl.util";
+import { compressImage } from "$lib/utils/compressImage.util";
 import { parseFormData } from "$lib/utils/parseFormData.util";
 import { type Actions, redirect } from "@sveltejs/kit";
 
@@ -24,11 +26,11 @@ export async function load(): Promise<PageDataInterface> {
 		rooms: rooms.map((r) => ({
 			id: r.id,
 			name: r.name ?? String(r.id),
-			image: r.image ?? DEFAULT_ROOM_IMAGE,
+			image: r.thumbnail ?? DEFAULT_ROOM_IMAGE,
 			flowers: r.flowers.map((f) => ({
 				id: f.id,
 				name: f.name,
-				image: f.photos[0]?.file ?? "",
+				image: f.photos[0]?.thumbnail ?? "",
 				roomId: r.id,
 				roomName: r.name,
 				watering: {
@@ -52,9 +54,8 @@ export async function load(): Promise<PageDataInterface> {
 				photos: f.photos.map((p) => ({
 					id: p.id,
 					date: p.date,
-					file: p.file,
-					flowerId: p.flowerId,
-					filename: p.filename,
+					flowerId: f.id,
+					thumbnail: p.thumbnail,
 				})),
 			})),
 		})),
@@ -65,14 +66,22 @@ export const actions: Actions = {
 	addRoom: async ({ request }) => {
 		const formData = await request.formData();
 		const payload = await parseFormData<CreateRoomMutationInterface>(formData);
-		await createRoomMutation(payload);
+
+		const image = formData.get("image") as File | null;
+		const thumbnail = bufferToDataUrl(await compressImage(image));
+
+		await createRoomMutation({ ...payload, thumbnail });
 
 		return redirect(302, "/rooms");
 	},
 	editRoom: async ({ request }) => {
 		const formData = await request.formData();
 		const payload = await parseFormData<UpdateRoomMutationInterface>(formData);
-		await updateRoomMutation(payload);
+
+		const image = formData.get("image") as File | null;
+		const thumbnail = bufferToDataUrl(await compressImage(image));
+
+		await updateRoomMutation({ ...payload, thumbnail });
 
 		return redirect(302, "/rooms");
 	},

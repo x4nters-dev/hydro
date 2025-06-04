@@ -11,6 +11,14 @@ export function getFlowersByRoomId(roomId: number) {
 			photos: {
 				limit: 1,
 				orderBy: desc(photos.date),
+				columns: {
+					id: true,
+					date: true,
+					file: false,
+					thumbnail: true,
+					filename: false,
+					flowerId: false,
+				},
 			},
 		},
 	});

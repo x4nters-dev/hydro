@@ -6,6 +6,7 @@ export const rooms = sqliteTable("rooms", {
 	id: int().primaryKey({ autoIncrement: true }),
 	name: text({ length: 100 }),
 	image: text({ mode: "text" }),
+	thumbnail: text({ mode: "text" }),
 });
 
 export const flowers = sqliteTable("flowers", {
@@ -20,6 +21,7 @@ export const photos = sqliteTable("photos", {
 	id: int().primaryKey({ autoIncrement: true }),
 	date: int({ mode: "timestamp" }).notNull(),
 	file: text({ mode: "text" }).notNull(),
+	thumbnail: text({ mode: "text" }).notNull(),
 	filename: text({ mode: "text" }).notNull(),
 	flowerId: int()
 		.references(() => flowers.id, {

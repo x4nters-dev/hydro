@@ -26,6 +26,12 @@ export function getFlowerByIdQuery(params: {
 			},
 			photos: {
 				orderBy: desc(photos.date),
+				columns: {
+					id: true,
+					date: true,
+					file: false,
+					thumbnail: true,
+				},
 			},
 		},
 	});

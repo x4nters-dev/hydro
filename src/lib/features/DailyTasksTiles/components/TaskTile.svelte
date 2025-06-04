@@ -35,8 +35,8 @@ function onDone(event: Event): void {
     {#snippet header()}
         <ImageCover
             imageSrc={props.task.flower.image ?? DEFAULT_FLOWER_IMAGE}
-            alt={props.task.flower.name ?? String(props.task.flower.id)}
-            title={props.task.flower.name ?? String(props.task.flower.id)}
+            alt={props.task.flower.name || String(props.task.flower.id)}
+            title={props.task.flower.name || String(props.task.flower.id)}
             greyscale={props.task.done}
         >
             {#snippet actions()}

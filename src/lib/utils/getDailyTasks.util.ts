@@ -29,7 +29,7 @@ export function getDailyTasks(
 			flower: {
 				id: flower.id,
 				name: flower.name,
-				image: flower.photos.at(0)?.file ?? null,
+				image: flower.photos.at(0)?.thumbnail ?? null,
 			},
 			done: !needsWatering,
 			conditions: {

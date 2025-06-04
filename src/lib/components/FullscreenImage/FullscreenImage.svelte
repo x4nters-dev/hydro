@@ -4,7 +4,7 @@ import { t } from "$lib/i18n";
 import { Fullscreen } from "lucide-svelte";
 
 const props: {
-	file: string;
+	src: string;
 	alt: string;
 } = $props();
 </script>
@@ -15,6 +15,6 @@ const props: {
     {/snippet}
 
     {#snippet content(open, close)}
-        <img src={props.file} alt={props.alt} />
+        <img src={props.src} alt={props.alt} />
     {/snippet}
 </CustomModal>
