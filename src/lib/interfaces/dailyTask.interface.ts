@@ -9,14 +9,14 @@ export interface DailyTaskInterface {
 		image: string | null;
 	};
 	watering: {
-		amount?: number | null;
-		frequency?: number | null;
+		amount: number | null;
+		frequency: number | null;
 		lastWateringData: Date | null;
 	};
 	conditions: {
-		minTemperature?: number | null;
-		maxTemperature?: number | null;
-		soilType?: SoilTypeEnum | null;
+		minTemperature: number | null;
+		maxTemperature: number | null;
+		soilType: SoilTypeEnum | null;
 	};
 	history: {
 		date: Date;

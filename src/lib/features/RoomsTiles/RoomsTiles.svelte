@@ -5,12 +5,11 @@ import type { RoomInterface } from "$lib/interfaces/room.interface";
 
 const props: {
 	rooms: RoomInterface[];
-	onClick: (room: RoomInterface) => void;
 } = $props();
 </script>
 
 <TilesGrid>
     {#each props.rooms as room (room.id)}
-        <RoomTile {room} onclick={() => props.onClick(room)}/>
+        <RoomTile {room} />
     {/each}
 </TilesGrid>

@@ -6,7 +6,6 @@ let {
 	name: string;
 	label?: string;
 	value?: string | null;
-	placeholder?: string;
 	required?: boolean;
 	onChange?: (value: string) => void;
 } = $props();
@@ -17,10 +16,9 @@ let {
     <input 
         type="text" 
         class="input" 
-        placeholder={props.placeholder}
         bind:value={value}
         name={props.name}
         required={props.required}
-        onchange={e => props.onChange?.(e.target.value)}
+        onchange={e => props.onChange?.(e.currentTarget.value)}
     />
 </label>

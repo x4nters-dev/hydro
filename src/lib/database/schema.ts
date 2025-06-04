@@ -1,20 +1,31 @@
 import { relations } from "drizzle-orm";
-import { blob, int, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { int, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import type { SoilTypeEnum } from "../enums/soilType.enum";
 
 export const rooms = sqliteTable("rooms", {
 	id: int().primaryKey({ autoIncrement: true }),
 	name: text({ length: 100 }),
-	image: blob({ mode: "buffer" }),
+	image: text({ mode: "text" }),
 });
 
 export const flowers = sqliteTable("flowers", {
 	id: int().primaryKey({ autoIncrement: true }),
 	name: text({ length: 100 }),
-	image: blob({ mode: "buffer" }),
 	roomId: int().references(() => rooms.id, {
 		onDelete: "set null",
 	}),
+});
+
+export const photos = sqliteTable("photos", {
+	id: int().primaryKey({ autoIncrement: true }),
+	date: int({ mode: "timestamp" }).notNull(),
+	file: text({ mode: "text" }).notNull(),
+	filename: text({ mode: "text" }).notNull(),
+	flowerId: int()
+		.references(() => flowers.id, {
+			onDelete: "cascade",
+		})
+		.notNull(),
 });
 
 export const watering = sqliteTable("watering", {
@@ -38,9 +49,11 @@ export const wateringHistory = sqliteTable("wateringHistory", {
 	id: int().primaryKey({ autoIncrement: true }),
 	date: int({ mode: "timestamp" }).notNull(),
 	amount: int({ mode: "number" }),
-	flowerId: int().references(() => flowers.id, {
-		onDelete: "cascade",
-	}),
+	flowerId: int()
+		.references(() => flowers.id, {
+			onDelete: "cascade",
+		})
+		.notNull(),
 });
 
 export const roomRelations = relations(rooms, ({ many }) => ({
@@ -61,6 +74,14 @@ export const flowerRelations = relations(flowers, ({ many, one }) => ({
 		references: [conditions.flowerId],
 	}),
 	wateringHistory: many(wateringHistory),
+	photos: many(photos),
+}));
+
+export const photosRelations = relations(photos, ({ one }) => ({
+	flower: one(flowers, {
+		fields: [photos.flowerId],
+		references: [flowers.id],
+	}),
 }));
 
 export const wateringRelations = relations(watering, ({ one }) => ({

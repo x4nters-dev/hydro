@@ -1,15 +1,24 @@
 import { deleteWateringHistoryMutation } from "$lib/database/mutations/deleteWateringHistory.mutation";
 import { getWateringHistoryQuery } from "$lib/database/queries/getWateringHistory.query";
+import type { WateringHistoryInterface } from "$lib/interfaces/wateringHistory.interface";
 import { type Actions, redirect } from "@sveltejs/kit";
-import { addMonths } from "date-fns";
 
-export async function load() {
-	const wateringHistory = await getWateringHistoryQuery({
-		start: addMonths(new Date(), -1),
-		end: new Date(),
-	});
+interface PageDataInterface {
+	wateringHistory: WateringHistoryInterface[];
+}
 
-	return { wateringHistory };
+export async function load(): Promise<PageDataInterface> {
+	const wateringHistory = await getWateringHistoryQuery();
+
+	return {
+		wateringHistory: wateringHistory.map((h) => ({
+			id: h.id,
+			date: h.date,
+			amount: h.amount,
+			flowerId: h.flowerId,
+			flowerName: h.flower.name,
+		})),
+	};
 }
 
 export const actions: Actions = {

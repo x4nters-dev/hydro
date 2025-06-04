@@ -30,12 +30,10 @@ const props: {
             <TextInput
                 name="name"
                 label={$t('name')}
-                value={props.flower.name ?? ''}
+                value={props.flower.name}
             />
 
-            <ImageFileField />
-
-            <Select label={$t('room')} name="roomId" value={props.flower.roomId ?? null}>
+            <Select label={$t('room')} name="roomId" value={props.flower.roomId}>
                 {#each props.rooms as room}
                     <option value={room.id}>{room.name}</option>
                 {/each}

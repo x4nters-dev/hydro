@@ -1,10 +1,8 @@
 import { DB } from "$lib/database/connection";
+import { photos } from "$lib/database/schema";
+import { desc } from "drizzle-orm";
 
-interface GetRoomsQueryInterface {
-	omitImage?: boolean;
-}
-
-export async function getRoomsQuery(params?: GetRoomsQueryInterface) {
+export function getRoomsQuery() {
 	return DB.query.rooms.findMany({
 		with: {
 			flowers: {
@@ -12,12 +10,21 @@ export async function getRoomsQuery(params?: GetRoomsQueryInterface) {
 					id: true,
 					name: true,
 				},
+				with: {
+					photos: {
+						limit: 1,
+						orderBy: desc(photos.date),
+					},
+					watering: true,
+					conditions: true,
+					wateringHistory: true,
+				},
 			},
 		},
 		columns: {
 			id: true,
 			name: true,
-			image: !params?.omitImage,
+			image: true,
 		},
 	});
 }

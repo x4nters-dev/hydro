@@ -7,7 +7,6 @@ export async function PUT({ request }): Promise<Response> {
 	const result = await createWateringHistoryMutation({
 		amount: body.task.watering.amount,
 		flowerId: body.task.flower.id,
-		date: new Date(),
 	});
 
 	if (result.rowsAffected === 0) {

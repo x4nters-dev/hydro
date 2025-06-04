@@ -35,8 +35,8 @@ function onDone(event: Event): void {
     {#snippet header()}
         <ImageCover
             imageSrc={props.task.flower.image ?? DEFAULT_FLOWER_IMAGE}
-            alt={props.task.flower.name}
-            title={props.task.flower.name}
+            alt={props.task.flower.name ?? String(props.task.flower.id)}
+            title={props.task.flower.name ?? String(props.task.flower.id)}
             greyscale={props.task.done}
         >
             {#snippet actions()}
@@ -75,7 +75,7 @@ function onDone(event: Event): void {
                 {/snippet}
             </Detail>
 
-            <Detail value={$t(props.task.conditions.soilType)}>
+            <Detail value={$t(String(props.task.conditions.soilType))}>
                 {#snippet icon()}
                     <LandPlot />
                 {/snippet}

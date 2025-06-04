@@ -1,11 +1,9 @@
 import { DB } from "$lib/database/connection";
 import { wateringHistory } from "$lib/database/schema";
+import { addMonths } from "date-fns";
 import { between } from "drizzle-orm";
 
-export async function getWateringHistoryQuery(params: {
-	start: Date;
-	end: Date;
-}) {
+export function getWateringHistoryQuery() {
 	return DB.query.wateringHistory.findMany({
 		with: {
 			flower: {
@@ -15,6 +13,6 @@ export async function getWateringHistoryQuery(params: {
 				},
 			},
 		},
-		where: between(wateringHistory.date, params.start, params.end),
+		where: between(wateringHistory.date, addMonths(new Date(), -1), new Date()),
 	});
 }

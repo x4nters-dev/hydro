@@ -21,7 +21,9 @@ const flower = $derived(props.flower);
     {#snippet content(open, close)}
         <Form action="?/deleteFlower">
             <input type="hidden" name="flowerId" value={flower.id} />
+
             <span>{$t('deletePlantDescription')} {flower.name}</span>
+
             {#snippet buttons()}
                 <CancelSubmit onCancel={close} />
             {/snippet}

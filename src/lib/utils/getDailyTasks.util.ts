@@ -1,6 +1,5 @@
 import type { DailyTaskInterface } from "$lib/interfaces/dailyTask.interface";
 import type { FlowerInterface } from "$lib/interfaces/flower.interface";
-import { bufferToDataUrl } from "$lib/utils/bufferToDataUrl.util";
 import { differenceInDays } from "date-fns";
 
 export function getDailyTasks(
@@ -30,10 +29,7 @@ export function getDailyTasks(
 			flower: {
 				id: flower.id,
 				name: flower.name,
-				image:
-					flower.image && (flower.image as Buffer).byteLength > 0
-						? bufferToDataUrl(flower.image as Buffer)
-						: null,
+				image: flower.photos.at(0)?.file ?? null,
 			},
 			done: !needsWatering,
 			conditions: {
@@ -46,11 +42,10 @@ export function getDailyTasks(
 				lastWateringData: flower.wateringHistory?.[0]?.date ?? null,
 				frequency: flower.watering?.frequency,
 			},
-			history:
-				flower.wateringHistory?.map((h) => ({
-					date: h.date,
-					amount: h.amount,
-				})) ?? [],
+			history: flower.wateringHistory?.map((h) => ({
+				date: h.date,
+				amount: h.amount,
+			})),
 		});
 	}
 

@@ -4,8 +4,7 @@ import type { ResultSet } from "@libsql/client";
 
 export interface CreateWateringHistoryMutationInterface {
 	flowerId: number;
-	date: Date;
-	amount?: number | null;
+	amount: number | null;
 }
 
 export async function createWateringHistoryMutation(
@@ -14,6 +13,6 @@ export async function createWateringHistoryMutation(
 	return DB.insert(wateringHistory).values({
 		amount: params.amount,
 		flowerId: params.flowerId,
-		date: params.date,
+		date: new Date(),
 	});
 }

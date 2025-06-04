@@ -1,4 +1,8 @@
-import { createFlowerMutation } from "$lib/database/mutations/createFlower.mutation";
+import { DEFAULT_FLOWER_IMAGE } from "$lib/consts/defaultFlowerImage.const";
+import {
+	type CreateFlowerMutationInterface,
+	createFlowerMutation,
+} from "$lib/database/mutations/createFlower.mutation";
 import { deleteFlowerMutation } from "$lib/database/mutations/deleteFlower.mutation";
 import {
 	type UpdateFlowerMutationInterface,
@@ -7,36 +11,82 @@ import {
 import { getFlowersQuery } from "$lib/database/queries/getFlowers.query";
 import { getRoomsQuery } from "$lib/database/queries/getRooms.query";
 import type { FlowerInterface } from "$lib/interfaces/flower.interface";
-import { bufferToDataUrl } from "$lib/utils/bufferToDataUrl.util";
+import type { RoomInterface } from "$lib/interfaces/room.interface";
 import { parseFormData } from "$lib/utils/parseFormData.util";
 import { redirect } from "@sveltejs/kit";
 
-export async function load() {
-	const flowers = (await getFlowersQuery()).map((f) => ({
-		...f,
-		image: f.image && f.image.byteLength > 0 ? bufferToDataUrl(f.image) : null,
-	}));
+interface PageDataInterface {
+	flowers: FlowerInterface[];
+	rooms: RoomInterface[];
+}
 
-	const rooms = await getRoomsQuery({ omitImage: true });
+export async function load(): Promise<PageDataInterface> {
+	const flowers = await getFlowersQuery();
+	const rooms = await getRoomsQuery();
 
-	return { flowers, rooms };
+	return {
+		flowers: flowers.map((f) => ({
+			id: f.id,
+			name: f.name || String(f.id),
+			image: f.photos[0]?.file ?? DEFAULT_FLOWER_IMAGE,
+			roomId: f.roomId,
+			roomName: f.room?.name ?? null,
+			watering: {
+				flowerId: f.watering.flowerId,
+				frequency: f.watering.frequency,
+				amount: f.watering.amount,
+			},
+			conditions: {
+				flowerId: f.conditions.flowerId,
+				minTemperature: f.conditions.minTemperature,
+				maxTemperature: f.conditions.maxTemperature,
+				soilType: f.conditions.soilType,
+			},
+			wateringHistory: f.wateringHistory.map((h) => ({
+				id: h.id,
+				date: h.date,
+				amount: h.amount,
+				flowerId: h.flowerId,
+				flowerName: f.name,
+			})),
+			photos: f.photos.map((p) => ({
+				id: p.id,
+				date: p.date,
+				file: p.file ?? "",
+				filename: p.filename,
+				flowerId: p.flowerId,
+			})),
+		})),
+		rooms: rooms.map((r) => ({
+			id: r.id,
+			name: r.name,
+			image: r.image,
+			flowers: [],
+		})),
+	};
 }
 
 export const actions = {
 	addFlower: async ({ request }) => {
-		const payload = (await parseFormData(
-			await request.formData(),
-		)) as FlowerInterface;
-		await createFlowerMutation(payload);
+		const formData = await request.formData();
+		const payload =
+			await parseFormData<CreateFlowerMutationInterface>(formData);
+
+		const image = formData.get("image") as File | null;
+		const filename = image?.name ?? null;
+
+		await createFlowerMutation({
+			...payload,
+			filename,
+		});
 
 		return redirect(302, "/flowers");
 	},
 	editFlower: async ({ request }) => {
-		const payload = (await parseFormData(
-			await request.formData(),
-		)) as UpdateFlowerMutationInterface;
+		const formData = await request.formData();
+		const payload =
+			await parseFormData<UpdateFlowerMutationInterface>(formData);
 		await updateFlowerMutation(payload);
-
 		return redirect(302, "/flowers");
 	},
 	deleteFlower: async ({ request }) => {

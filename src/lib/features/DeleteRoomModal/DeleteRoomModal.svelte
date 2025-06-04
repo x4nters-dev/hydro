@@ -19,7 +19,9 @@ const props: {
     {#snippet content(open, close)}
         <Form action="?/deleteRoom">
             <input type="hidden" name="roomId" value={props.room.id} />
+
             <span>{$t('deleteRoomDescription')} {props.room.name}</span>
+
             {#snippet buttons()}
                 <CancelSubmit onCancel={close} />
             {/snippet}

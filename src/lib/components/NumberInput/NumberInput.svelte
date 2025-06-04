@@ -3,7 +3,6 @@ let {
 	value = $bindable(),
 	...props
 }: {
-	placeholder?: string;
 	label: string;
 	name: string;
 	step?: number;
@@ -21,10 +20,9 @@ let {
         step={props.step}
         min={props.min}
         max={props.max}
-        placeholder={props.placeholder}
         bind:value={value}
         name={props.name}
-        onchange={e => props.onchange?.(e.target.value)}
+        onchange={e => props.onchange?.(Number(e.currentTarget.value))}
         class="input"
     />
 </label>

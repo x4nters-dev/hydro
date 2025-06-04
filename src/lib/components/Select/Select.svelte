@@ -19,7 +19,7 @@ let {
         bind:value={value}
         class="select"
         name={props.name}
-        onchange={e => props.onchange?.(e.target.value)}
+        onchange={e => props.onchange?.(e.currentTarget.value)}
     >
         {@render props.children()}
     </select>

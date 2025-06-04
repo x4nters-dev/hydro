@@ -6,7 +6,6 @@ import { eq } from "drizzle-orm";
 export interface UpdateFlowerMutationInterface {
 	flowerId: number;
 	name: string | null;
-	image: Buffer | null;
 
 	roomId: number | null;
 
@@ -14,6 +13,7 @@ export interface UpdateFlowerMutationInterface {
 		frequency: number | null;
 		amount: number | null;
 	};
+
 	conditions: {
 		minTemperature: number | null;
 		maxTemperature: number | null;
@@ -23,15 +23,11 @@ export interface UpdateFlowerMutationInterface {
 
 export async function updateFlowerMutation(
 	params: UpdateFlowerMutationInterface,
-): Promise<void> {
+) {
 	const flowerUpdate: Record<string, unknown> = {
 		name: params.name,
 		roomId: params.roomId ?? null,
 	};
-
-	if (params.image && params.image.byteLength > 0) {
-		flowerUpdate.image = params.image;
-	}
 
 	await DB.update(flowers)
 		.set(flowerUpdate)

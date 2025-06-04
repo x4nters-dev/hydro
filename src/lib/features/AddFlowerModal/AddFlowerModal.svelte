@@ -28,7 +28,7 @@ const props: {
                 label={$t('name')}
             />
 
-            <ImageFileField />
+            <ImageFileField name="image" />
 
             <Select label={$t('room')} name="roomId">
                 {#each props.rooms as room}

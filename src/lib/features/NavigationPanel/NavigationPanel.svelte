@@ -12,12 +12,15 @@ const rootOfActiveRoute = $derived(`/${String(id).split("/")[1]}`);
         <Navigation.Tile id="/daily" href="/daily">
             <Droplets />
         </Navigation.Tile>
+
         <Navigation.Tile id="/flowers" href="/flowers">
             <Flower />
         </Navigation.Tile>
+
         <Navigation.Tile id="/rooms" href="/rooms">
             <SquareSquare />
         </Navigation.Tile>
+
         <Navigation.Tile id="/history" href="/history">
             <History />
         </Navigation.Tile>

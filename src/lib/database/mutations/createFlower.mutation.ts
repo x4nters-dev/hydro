@@ -1,11 +1,14 @@
 import { DB } from "$lib/database/connection";
-import { conditions, flowers, watering } from "$lib/database/schema";
+import { conditions, flowers, photos, watering } from "$lib/database/schema";
 import type { SoilTypeEnum } from "$lib/enums/soilType.enum";
 
 export interface CreateFlowerMutationInterface {
 	name: string | null;
-	image: Buffer | string | null;
+	image: string | null;
+	filename: string | null;
+
 	roomId: number | null;
+
 	watering: {
 		frequency: number | null;
 		amount: number | null;
@@ -17,17 +20,23 @@ export interface CreateFlowerMutationInterface {
 	};
 }
 
-export async function createFlowerMutation(
-	params: CreateFlowerMutationInterface,
-): Promise<number> {
+export function createFlowerMutation(params: CreateFlowerMutationInterface) {
 	return DB.transaction(async (tx) => {
 		const [result] = await tx
 			.insert(flowers)
 			.values({
 				name: params.name,
-				image: params.image as Buffer | null,
 			})
 			.returning({ id: flowers.id });
+
+		if (params.image) {
+			await tx.insert(photos).values({
+				flowerId: result.id,
+				date: new Date(),
+				file: params.image,
+				filename: params.filename as string,
+			});
+		}
 
 		await tx.insert(watering).values({
 			flowerId: result.id,

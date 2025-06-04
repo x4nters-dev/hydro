@@ -3,10 +3,11 @@ import Detail from "$lib/components/Detail/Detail.svelte";
 import DetailsGrid from "$lib/components/DetailsGrid/DetailsGrid.svelte";
 import ImageCover from "$lib/components/ImageCover/ImageCover.svelte";
 import Subtitle from "$lib/components/Subtitle/Subtitle.svelte";
-import { DEFAULT_FLOWER_IMAGE } from "$lib/consts/defaultFlowerImage.const";
+import AddFlowerPhoto from "$lib/features/AddFlowerPhoto/AddFlowerPhoto.svelte";
 import ClearHistoryForFlowerModal from "$lib/features/ClearHistoryForFlowerModal/ClearHistoryForFlowerModal.svelte";
 import DeleteFlower from "$lib/features/DeleteFlower/DeleteFlower.svelte";
 import EditFlowerModal from "$lib/features/EditFlowerModal/EditFlowerModal.svelte";
+import FlowerGallery from "$lib/features/FlowerGallery/FlowerGallery.svelte";
 import WateringHistoryTable from "$lib/features/WateringHistoryTable/WateringHistoryTable.svelte";
 import { t } from "$lib/i18n";
 import type { FlowerInterface } from "$lib/interfaces/flower.interface";
@@ -30,13 +31,14 @@ const props: {
 </script>
 
 <ImageCover
-    imageSrc={props.flower.image ?? DEFAULT_FLOWER_IMAGE}
-    title={props.flower.name ?? props.flower.id}
-    alt={String(props.flower.name ?? props.flower.id)}
+    imageSrc={props.flower.image}
+    title={props.flower.name ?? String(props.flower.id)}
+    alt={props.flower.name ?? String(props.flower.id)}
     compact
 >
     {#snippet actions()}
         <ClearHistoryForFlowerModal flower={props.flower} />
+        <AddFlowerPhoto flowerId={props.flower.id} />
         <EditFlowerModal flower={props.flower} rooms={props.rooms} />
         <DeleteFlower flower={props.flower} />
     {/snippet}
@@ -68,7 +70,7 @@ const props: {
             {/snippet}
         </Detail>
 
-        <Detail value={$t(props.flower.conditions?.soilType)}>
+        <Detail value={$t(String(props.flower.conditions?.soilType))}>
             {#snippet icon()}
                 <LandPlot />
             {/snippet}
@@ -86,7 +88,7 @@ const props: {
             {/snippet}
         </Detail>
 
-        <Detail value={props.flower.room?.name}>
+        <Detail value={props.flower.roomName}>
             {#snippet icon()}
             	<SquareSquare />
             {/snippet}
@@ -95,6 +97,8 @@ const props: {
 </div>
 
 <div class="p-4 flex flex-col gap-4">
+    <Subtitle text={$t('gallery')} />
+    <FlowerGallery photos={props.flower.photos} />
     <Subtitle text={$t('history')} />
     <WateringHistoryTable wateringHistory={props.flower.wateringHistory} />
 </div>

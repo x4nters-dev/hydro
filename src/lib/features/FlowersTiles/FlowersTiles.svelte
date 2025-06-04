@@ -7,7 +7,6 @@ import type { RoomInterface } from "$lib/interfaces/room.interface";
 const props: {
 	flowers: FlowerInterface[];
 	rooms: RoomInterface[];
-	onClick: (flower: FlowerInterface) => void;
 } = $props();
 
 const flowers = $derived(props.flowers);
@@ -16,10 +15,6 @@ const rooms = $derived(props.rooms);
 
 <TilesGrid>
     {#each flowers as flower (flower.id)}
-        <FlowerTile
-            {flower}
-            {rooms}
-            onclick={() => props.onClick(flower)}
-        />
+        <FlowerTile {flower} {rooms} />
     {/each}
 </TilesGrid>

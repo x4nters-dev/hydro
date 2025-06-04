@@ -8,6 +8,7 @@ const props: {
 	title: string;
 	content: Snippet<[boolean, () => void]>;
 	trigger: Snippet;
+	fullscreen?: boolean;
 } = $props();
 
 let open = $state(false);
@@ -23,15 +24,16 @@ function close(): void {
     triggerBase="btn-icon preset-tonal"
     contentBase="card bg-surface-100-900 p-4 space-y-4 shadow-xl"
     backdropClasses="backdrop-blur-sm"
-    onclick={e => e.stopPropagation()}
+    onclick={(e: Event) => e.stopPropagation()}
 >
     {#snippet trigger()}
         {@render props.trigger()}
     {/snippet}
+
     {#snippet content()}
         <header class="flex items-center justify-between">
             <span class="h3">{props.title}</span>
-            <IconButton onclick={() => open = false}>
+            <IconButton onclick={close}>
                 <X />
             </IconButton>
         </header>

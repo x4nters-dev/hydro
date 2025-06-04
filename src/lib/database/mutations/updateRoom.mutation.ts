@@ -1,22 +1,19 @@
 import { DB } from "$lib/database/connection";
 import { rooms } from "$lib/database/schema";
-import type { ResultSet } from "@libsql/client";
 import { eq } from "drizzle-orm";
 
 export interface UpdateRoomMutationInterface {
 	roomId: number;
 	name: string | null;
-	image: Buffer | null;
+	image: string | null;
 }
 
-export async function updateRoomMutation(
-	params: UpdateRoomMutationInterface,
-): Promise<ResultSet> {
+export function updateRoomMutation(params: UpdateRoomMutationInterface) {
 	const roomUpdate: Record<string, unknown> = {
 		name: params.name,
 	};
 
-	if (params.image && params.image.byteLength > 0) {
+	if (params.image && params.image.length > 0) {
 		roomUpdate.image = params.image;
 	}
 

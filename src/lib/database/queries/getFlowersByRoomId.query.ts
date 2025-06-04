@@ -1,6 +1,6 @@
 import { DB } from "$lib/database/connection";
-import { flowers } from "$lib/database/schema";
-import { eq } from "drizzle-orm";
+import { flowers, photos } from "$lib/database/schema";
+import { desc, eq } from "drizzle-orm";
 
 export function getFlowersByRoomId(roomId: number) {
 	return DB.query.flowers.findMany({
@@ -8,6 +8,10 @@ export function getFlowersByRoomId(roomId: number) {
 		with: {
 			conditions: true,
 			watering: true,
+			photos: {
+				limit: 1,
+				orderBy: desc(photos.date),
+			},
 		},
 	});
 }

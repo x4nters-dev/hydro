@@ -28,7 +28,7 @@ const props: {
                 value={props.room.name ?? ''}
             />
 
-            <ImageFileField />
+            <ImageFileField name="image" />
 
             {#snippet buttons()}
                 <CancelSubmit onCancel={close} />

@@ -1,5 +1,5 @@
 import { DB } from "$lib/database/connection";
-import { wateringHistory } from "$lib/database/schema";
+import { photos, wateringHistory } from "$lib/database/schema";
 import { desc } from "drizzle-orm";
 
 export function getFlowersQuery() {
@@ -14,8 +14,12 @@ export function getFlowersQuery() {
 			conditions: true,
 			watering: true,
 			wateringHistory: {
-				limit: 10,
+				limit: 1,
 				orderBy: desc(wateringHistory.date),
+			},
+			photos: {
+				limit: 1,
+				orderBy: desc(photos.date),
 			},
 		},
 	});

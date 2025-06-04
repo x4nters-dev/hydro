@@ -3,7 +3,7 @@ import BackButton from "$lib/components/BackButton/BackButton.svelte";
 import type { Snippet } from "svelte";
 
 const props: {
-	title?: string;
+	title: string;
 	showBackButton?: boolean;
 	actions?: Snippet;
 } = $props();

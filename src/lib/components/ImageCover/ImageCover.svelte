@@ -2,9 +2,9 @@
 import type { Snippet } from "svelte";
 
 const props: {
-	imageSrc?: string | null;
-	alt: string | null;
-	title?: string | number | null;
+	imageSrc: string | null;
+	alt: string;
+	title: string;
 	actions?: Snippet;
 	compact?: boolean;
 	greyscale?: boolean;

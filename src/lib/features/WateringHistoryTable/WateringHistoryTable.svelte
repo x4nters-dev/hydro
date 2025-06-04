@@ -4,7 +4,7 @@ import type { WateringHistoryInterface } from "$lib/interfaces/wateringHistory.i
 import { toDateFormat } from "$lib/utils/toDateFormat.util";
 
 const props: {
-	wateringHistory: WateringHistoryInterface[] | null | undefined;
+	wateringHistory: WateringHistoryInterface[];
 } = $props();
 </script>
 
@@ -22,7 +22,7 @@ const props: {
             {#each props.wateringHistory as row, index (row.id)}
                 <tr>
                     <td>{index+1}</td>
-                    <td>{row.flower?.name ?? row.flower?.id}</td>
+                    <td>{row.flowerName ?? row.flowerId}</td>
                     <td>{toDateFormat(row.date)}</td>
                     <td>{row.amount}</td>
                 </tr>

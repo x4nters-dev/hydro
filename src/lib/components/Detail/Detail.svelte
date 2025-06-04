@@ -3,7 +3,7 @@ import type { Snippet } from "svelte";
 
 const props: {
 	icon: Snippet;
-	value: string | number | null | undefined;
+	value: string | number | null;
 } = $props();
 </script>
 
