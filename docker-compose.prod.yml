@@ -1,0 +1,12 @@
+name: hydro
+
+services:
+  server:
+    image: hydro:arm64
+    ports:
+      - "30333:3000"
+    volumes:
+      - ./data:/app/data
+    env_file:
+      - .env.production
+    restart: unless-stopped
